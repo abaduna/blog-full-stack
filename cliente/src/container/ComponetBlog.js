@@ -7,7 +7,7 @@ import {useNative}  from "react-router-dom"
   import { useNavigate } from 'react-router-dom';
 function ComponetBlog({result,setUpdate}) {
   const {id} = result
-
+  const navigate = useNavigate()
   const [endpoint, setEndpoint] = useState(`blogs`);
   
   
@@ -27,7 +27,7 @@ function ComponetBlog({result,setUpdate}) {
     
   }
   const sendToViwers=()=>{
-    // navigate(`blog/${id}`)
+    navigate(`blog/${id}`)
   } 
    return (
     <>

@@ -10,12 +10,16 @@ function GetBlogComponent ({setUpdate}){
     const [endpoint, setEndpoint] = useState(`blogs`);
     const formRef = useRef(null);
     const hamdeUpDate =async()=>{
+      
       try {
        let datos ={
           title,
           estado
         }
         await API.post(endpoint,datos)
+        
+        
+        
         setEstado("")
         setTitle("")
         formRef.current.reset();
@@ -41,11 +45,12 @@ function GetBlogComponent ({setUpdate}){
           aria-describedby="basic-addon2"
           onChange={(e)=>setEstado(e.target.value) }
         />
+        
+        
+        </Form>
         <div className="d-grid gap-2">
             <Button onClick={hamdeUpDate}>Subir</Button>
         </div>
-        
-        </Form>
     </>
   )
 }

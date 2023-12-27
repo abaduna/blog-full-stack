@@ -22,9 +22,17 @@ app.use(morgan("dev"))
 
 //routes
 app.get("/blogs",async(req,res)=>{
-    const connection = await database.getConnection();
-    const result = await connection.query("SELECT * from blogs ");
-    res.status(200).json(result)
+    try {
+        const connection = await database.getConnection();
+        const result = await connection.query("SELECT * from blogs");
+        
+        console.log(result);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error en la consulta:", error);
+        await connection.end();
+        res.status(500).json({ error: "Error en la consulta" });
+    }
 })
 app.get("/blogs/:id",async(req,res)=> {
     const id = req.params.id
@@ -36,8 +44,8 @@ app.get("/blogs/:id",async(req,res)=> {
 
 app.post("/blogs", async (req, res) => {
     
-  
-    const {title,estado} = req.body
+    try {
+ const {title,estado} = req.body
     console.log(title);
     console.log(estado);
     // Asegúrate de ajustar esto según la estructura de tu objeto JSON
@@ -48,7 +56,13 @@ app.post("/blogs", async (req, res) => {
     const result = await connection.query( 
         `INSERT INTO blogs (title, estado) VALUES ('${title}', '${estado}')`
     );
-    res.status(200).json({ message: 'Blog agregado con éxito' });
+    res.status(200).json({ message: 'Blog agregado con éxito' });        
+    } catch (error) {
+        console.error("Error en la consulta:", error);
+        await connection.end();
+        res.status(500).json({ error: "Error en la consulta" });
+    }
+   
     
 });
 
@@ -77,6 +91,7 @@ app.put("/blogs/:id",async(req,res)=> {
         console.log(upDate);
     } catch (error) {
         console.error(error);
+        await connection.end();
         return res.status(500).json({ error: 'Internal Server Error' });
     }
    // const upDate = await connection.query(`UPDATE SET title='${title}',estado='${estado}' WHERE id = ${id};`);
@@ -86,11 +101,20 @@ app.put("/blogs/:id",async(req,res)=> {
 })
 
 app.delete("/blogs/:id",async(req,res)=>{
-    const id = req.params.id
-    const connection = await database.getConnection();
-    const result = await connection.query(`DELETE FROM blogs WHERE id = ${id};`);
-    res.status(200).json({ message: 'Blog eliminado con éxito' });
     
+    try {
+      const id = req.params.id
+    const connection = await database.getConnection();
+     await connection.query(`DELETE FROM blogs WHERE id =?;`,[id]);
+    
+    
+    res.status(200).json({ message: 'Blog eliminado con éxito' });  
+    } catch (error) {
+        console.error('Error al eliminar el blog:', error);
+        await connection.end();
+        res.status(500).json({ message: 'Error al eliminar el blog' });
+
+    }
 })
 app.listen(3000,()=>{
     console.log(`corriendo por el puerto 3000`);

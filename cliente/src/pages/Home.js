@@ -1,12 +1,11 @@
 import { useState,useEffect } from 'react';
 
-// import ComponetBlog from './container/ComponetBlog';
-//import ComponetBlog from "../componets/GetBlogComponent"
-import ComponetBlog from "../componets/GetBlogComponent"
+
+import ComponetBlog from "../container/ComponetBlog"
 import { Row,Container } from "react-bootstrap"
-// import { useFetch } from './hoocks/useFetch';
+import { API } from '../api';
 import { useFetch } from  "../hoocks/useFetch"
-// import GetBlogComponent from "./componets/GetBlogComponent"
+
 import GetBlogComponent from "./../componets/GetBlogComponent";
 
 
@@ -14,13 +13,11 @@ import GetBlogComponent from "./../componets/GetBlogComponent";
 function Home() {
     const [endpoint, setEndpoint] = useState(`blogs`);
     const [update, setUpdate] = useState("no se elimino nada");
-    const { data, loading, error } = useFetch(endpoint);
-    console.log(data);
-  
-   
-    console.log(update);
-   
-  
+    let { data, loading, error } = useFetch(endpoint);
+    
+    useEffect(()=>{
+      setEndpoint(`blogs`)
+    },[update])
   
    if (loading) <h1>Loading...</h1>
     if (error) <h1>error...</h1>
