@@ -15,6 +15,7 @@ export const useFetch = (endpoint) => {
       setLoading(true);
       const { data } = await API.get(endpoint);
       dispatch({ type: FETCH_DATA.SET_DATA, payload: data });
+      console.log(data);
     } catch (error) {
       dispatch({ type: FETCH_DATA.SET_ERROR });
     } finally {

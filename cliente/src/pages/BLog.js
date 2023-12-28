@@ -7,11 +7,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Row,Col } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 function BLog() {
   const [titleModified,setTitleModified] = useState("")
   const [estadoModified,setEstadoModified] = useState("")
   const { id } = useParams()
-  console.log(id);
+  const navigate = useNavigate()
   const [endpoint, setEndpoint] = useState(`blogs/${id}`);
     const [update, setUpdate] = useState("no se elimino nada");
     const { data, loading, error } = useFetch(endpoint);
@@ -24,6 +25,7 @@ function BLog() {
       await API.put(endpoint,data)
       console.log(`modificada con exito`);
       setTitleModified("")
+      navigate("/")
     }
     const upDateEstado=async()=>{
       let data = {
@@ -33,6 +35,7 @@ function BLog() {
       await API.put(endpoint,data)
       console.log(`modificada con exito`);
       setEstadoModified("")
+      navigate("/")
     }
   return (
     <><Row>

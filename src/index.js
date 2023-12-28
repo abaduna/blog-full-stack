@@ -28,16 +28,21 @@ app.get("/blogs",async(req,res)=>{
         
         console.log(result);
         res.status(200).json(result);
+        
+       
     } catch (error) {
         console.error("Error en la consulta:", error);
         await connection.end();
         res.status(500).json({ error: "Error en la consulta" });
+        
+        
     }
 })
 app.get("/blogs/:id",async(req,res)=> {
     const id = req.params.id
     const connection = await database.getConnection();
     const result = await connection.query(`SELECT * from blogs WHERE id = ${id};`);
+    
     res.status(200).json(result)
 })
 //creacion de un nuevo blog
@@ -105,13 +110,14 @@ app.delete("/blogs/:id",async(req,res)=>{
     try {
       const id = req.params.id
     const connection = await database.getConnection();
-     await connection.query(`DELETE FROM blogs WHERE id =?;`,[id]);
+    await  connection.query(`DELETE FROM blogs WHERE id =?;`,[id])
     
     
-    res.status(200).json({ message: 'Blog eliminado con éxito' });  
+    res.status(200).json({ message: 'Blog eliminado con éxito' }); 
+    
     } catch (error) {
         console.error('Error al eliminar el blog:', error);
-        await connection.end();
+       
         res.status(500).json({ message: 'Error al eliminar el blog' });
 
     }

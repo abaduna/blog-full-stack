@@ -14,9 +14,16 @@ function Home() {
     const [endpoint, setEndpoint] = useState(`blogs`);
     const [update, setUpdate] = useState("no se elimino nada");
     let { data, loading, error } = useFetch(endpoint);
-    
+    console.log(update);
+
+    console.log(loading);
     useEffect(()=>{
       setEndpoint(`blogs`)
+      console.log(update);
+
+      setUpdate("no se elimino nada")
+      console.log(endpoint);
+      console.log(data);
     },[update])
   
    if (loading) <h1>Loading...</h1>

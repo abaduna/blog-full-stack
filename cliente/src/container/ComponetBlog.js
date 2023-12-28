@@ -8,18 +8,17 @@ import {useNative}  from "react-router-dom"
 function ComponetBlog({result,setUpdate}) {
   const {id} = result
   const navigate = useNavigate()
-  const [endpoint, setEndpoint] = useState(`blogs`);
+  
   
   
 
   
   const useSendDeletd =async()=>{
     console.log(id);
-    setEndpoint(`blogs/${id}`)
     try {
-     await API.delete(endpoint)
+     await API.delete(`blogs/${id}`)
     console.log(`eliminado corectamente`);
-    setUpdate(`se elimino algo`) 
+    await setUpdate(`se elimino algo`) 
     } catch (error) {
       console.log(`ups ocurio un eror ${error}`);
       console.error(error);
