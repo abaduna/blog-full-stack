@@ -18,14 +18,12 @@ export const useFetch = (endpoint) => {
       console.log(data);
     } catch (error) {
       dispatch({ type: FETCH_DATA.SET_ERROR });
-    } finally {
-      setLoading(false);
-    }
+    } 
   }, [endpoint]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [endpoint,fetchData]);
 
-  return state;
+  return { state, fetchData }
 };

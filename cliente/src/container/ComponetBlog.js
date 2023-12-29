@@ -18,7 +18,7 @@ function ComponetBlog({result,setUpdate}) {
     try {
      await API.delete(`blogs/${id}`)
     console.log(`eliminado corectamente`);
-    await setUpdate(`se elimino algo`) 
+     setUpdate(`se elimino algo`) 
     } catch (error) {
       console.log(`ups ocurio un eror ${error}`);
       console.error(error);
